@@ -68,9 +68,9 @@
                         </span>
 
                         <div class="btn-group" role="group">
-                            <a href="{{ url('/storage/backups/'.$backup['raw_name']) }}"
+                            <a href="{{ url('admin/send-backup/'.$backup['raw_name']) }}"
                                 class="btn btn-outline-primary btn-sm">
-                                <i data-feather="download"></i>
+                                <i data-feather="mail"></i>
                             </a>
                             <button onclick="navigateViaJs(`{{url('admin/delete-backup/'.$backup['raw_name'])}}`)"
                                 class="btn btn-outline-danger btn-sm">

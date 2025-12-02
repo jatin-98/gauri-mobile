@@ -55,9 +55,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/settings', [SettingController::class, 'settings']);
     Route::post('/settings/insert', [SettingController::class, 'insert']);
 
-    Route::get('/create-backup', [BackupController::class, 'createBackup']);
     Route::get('/backups', [BackupController::class, 'index']);
+    Route::get('/create-backup', [BackupController::class, 'createBackup']);
     Route::get('/delete-backup/{filename}', [BackupController::class, 'delete']);
+    Route::get('/send-backup/{filename}', [BackupController::class, 'send']);
 
     Route::post('/datatable', [DatatableController::class, 'index']);
 

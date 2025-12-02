@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Session;
 use App\Services\DatabaseBackup;
+use App\Services\MailService;
 use Exception;
 use FilesystemIterator;
 
@@ -11,6 +12,9 @@ class BackupController
 {
 
     private const __BACKUP_PATH__ = __DIR__ . '/../../../storage/backups/';
+    private const __TO_EMAIL = "enme1704@gmail.com";
+    private const __EMAIL_SUBJECT = "Backup for Gauri Mobile";
+    private const __INNER_CONTENT = "Please find your backup attached.";
 
     public function createBackup()
     {
@@ -21,7 +25,7 @@ class BackupController
             return redirect('/admin/backups');
         }
 
-        return Session::flash('error', $backUp['message']);
+        Session::flash('error', $backUp['message']);
         return redirect('/admin/backups');
     }
 
@@ -58,7 +62,35 @@ class BackupController
                 return redirect('/admin/backups');
             }
         } catch (Exception $e) {
-            return Session::flash('error', base64_encode($e->getMessage()));
+            Session::flash('error', base64_encode($e->getMessage()));
+            return redirect('/admin/backups');
+        }
+    }
+
+    public function send(string $filename)
+    {
+        $filePath = self::__BACKUP_PATH__ . $filename;
+
+        if (!file_exists($filePath)) {
+            Session::flash('error', base64_encode('Backup File Not Found'));
+            return redirect('admin/backups');
+        }
+
+        $mailer = new MailService();
+
+        try {
+            $mailer->sendBackup(
+                self::__TO_EMAIL,
+                self::__EMAIL_SUBJECT,
+                self::__INNER_CONTENT,
+                file_get_contents($filePath),
+                pathinfo($filename, PATHINFO_FILENAME) 
+            );
+
+            Session::flash('success', "Backup sent Successfully!");
+            return redirect('/admin/backups');
+        } catch (Exception $e) {
+            Session::flash('error', base64_encode($e->getMessage()));
             return redirect('/admin/backups');
         }
     }

@@ -7,31 +7,59 @@ use PHPMailer\PHPMailer\Exception;
 
 class MailService
 {
+
+    protected $mail;
+
+    public function __construct()
+    {
+        $this->mail = new PHPMailer(true);
+        $this->mail->isSMTP();
+        $this->mail->Host       = 'smtp.gmail.com';
+        $this->mail->SMTPAuth   = true;
+        $this->mail->Username   = 'captainamerica7987@gmail.com';
+        $this->mail->Password   = 'tbuj rcpn hzxs pflo';   // NOT Gmail password
+        $this->mail->SMTPSecure = 'tls';
+        $this->mail->Port       = 587;
+        $this->mail->setFrom('captainamerica7987@gmail.com', 'Gauri Mobiles');
+    }
+
     public function sendInvoice($toEmail, $subject, $body, $pdfBinary, $invoiceNumber)
     {
-        $mail = new PHPMailer(true);
-
         try {
-            // Gmail Settings
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'captainamerica7987@gmail.com';
-            $mail->Password   = 'tbuj rcpn hzxs pflo';   // NOT Gmail password
-            $mail->SMTPSecure = 'tls';
-            $mail->Port       = 587;
+            $this->mail->addAddress($toEmail);
 
-            // Email details
-            $mail->setFrom('captainamerica7987@gmail.com', 'Gauri Mobiles');
-            $mail->addAddress($toEmail);
-
-            $mail->Subject = $subject;
-            $mail->Body    = $body;
+            $this->mail->Subject = $subject;
+            $this->mail->Body    = $body;
 
             // Attach PDF
-            $mail->addStringAttachment($pdfBinary, "Invoice-$invoiceNumber.pdf");
+            $this->mail->addStringAttachment($pdfBinary, "Invoice-$invoiceNumber.pdf");
 
-            return $mail->send();
+            return $this->mail->send();
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return false;
+        }
+    }
+
+    public function sendBackup($toEmail, $subject, $body, $sqlData, $backupName)
+    {
+        try {
+            $this->mail->clearAddresses();
+            $this->mail->clearAttachments();
+
+            $this->mail->addAddress($toEmail);
+            $this->mail->Subject = $subject;
+            $this->mail->Body    = $body;
+
+            // THIS IS THE KEY LINE
+            $this->mail->addStringAttachment(
+                $sqlData,
+                $backupName . '.sql',
+                'base64',
+                'application/octet-stream'
+            );
+
+            return $this->mail->send();
         } catch (Exception $e) {
             dd($e->getMessage());
             return false;
