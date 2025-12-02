@@ -55,14 +55,15 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/settings', [SettingController::class, 'settings']);
     Route::post('/settings/insert', [SettingController::class, 'insert']);
 
+    Route::get('/create-backup', [BackupController::class, 'createBackup']);
+    Route::get('/backups', [BackupController::class, 'index']);
+    Route::get('/delete-backup/{filename}', [BackupController::class, 'delete']);
+
     Route::post('/datatable', [DatatableController::class, 'index']);
 
     Route::post('/delete-record', [HomeController::class, 'deleteRecord']);
 
     Route::post('/send-invoice-to-customer', [InvoiceController::class, 'sendEmail']);
-
-    Route::get('/create-backup', [BackupController::class, 'createBackup']);
-    Route::get('/backups', [BackupController::class, 'index']);
 });
 
 

@@ -24,7 +24,8 @@ class DatabaseBackup
             // Full path for Windows
             $mysqldumpPath = self::__DUMP_PATH__;
 
-            $backupFile = self::__FILE_PATH__ . "backup_{$dbName}_" . date('Y-m-d_H-i-s') . ".sql";
+            $backUpFileName = base64_encode(date('Y-m-d_H:i:s'));
+            $backupFile = self::__FILE_PATH__ . $backUpFileName . ".sql";
 
             // Use mysqldump native file option (avoid > redirection)
             $command = "\"$mysqldumpPath\" --user=\"$user\" --password=\"$pass\" --host=\"$host\" \"$dbName\" --single-transaction --quick --routines --result-file=\"$backupFile\"";
@@ -32,7 +33,7 @@ class DatabaseBackup
             exec($command . " 2>&1", $output, $status);
 
             return $status === 0
-                ? ['status' => true, 'message' => "Backup created successfully: " . basename($backupFile)]
+                ? ['status' => true, 'message' => "Backup created successfully: " . base64_decode($backUpFileName)]
                 : ['status' => false, 'message' => "Backup failed:\n" . implode("\n", $output)];
         } catch (Exception $e) {
             return ['status' => false, 'message' => base64_encode($e->getMessage())];
