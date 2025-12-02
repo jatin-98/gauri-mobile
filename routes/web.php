@@ -4,6 +4,7 @@ use App\Core\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\DatatableController;
 use App\Http\controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
@@ -59,6 +60,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/delete-record', [HomeController::class, 'deleteRecord']);
 
     Route::post('/send-invoice-to-customer', [InvoiceController::class, 'sendEmail']);
+
+    Route::get('/create-backup', [BackupController::class, 'createBackup']);
+    Route::get('/backups', [BackupController::class, 'index']);
 });
 
 
