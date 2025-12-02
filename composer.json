@@ -1,0 +1,28 @@
+{
+    "name": "jatin/gauri-mobiles",
+    "description": "Core PHP project using Laravel Router & Facades",
+    "author": "jchauhan",
+    "type": "project",
+    "require": {
+        "php": "^8.0",
+        "illuminate/container": "^11.46",
+        "illuminate/events": "^11.46",
+        "illuminate/http": "^11.0",
+        "illuminate/routing": "^11.0",
+        "illuminate/support": "^11.46",
+        "illuminate/pipeline": "^11.0",
+        "illuminate/view": "^11.46",
+        "illuminate/filesystem": "^11.46",
+        "illuminate/database": "^11.46",
+        "dompdf/dompdf": "^3.1",
+        "phpmailer/phpmailer": "^7.0"
+    },
+    "autoload": {
+        "files": [
+            "helpers/methods.php"
+        ],
+        "psr-4": {
+            "App\\": "App/"
+        }
+    }
+}
