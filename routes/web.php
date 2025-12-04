@@ -24,7 +24,7 @@ Route::get('/logout', function () {
     redirect('/login');
 });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', fn() => redirect('/admin'));
 
 // ==============================
 // Admin Routes (Grouped with prefix + middleware)
@@ -65,26 +65,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/delete-record', [HomeController::class, 'deleteRecord']);
 
     Route::post('/send-invoice-to-customer', [InvoiceController::class, 'sendEmail']);
+    Route::post('/fetch-products', [SalesController::class, 'fetchProducts']);
 });
 
 
 Route::fallback(function () {
     return view('default.404');
 });
-
-
-// ==============================
-// Testing Routes
-// ==============================
-// Route::middleware('auth')->group(function () {
-//     Route::get('/dashboard', function () {
-//         return 'Welcome to the secure dashboard!';
-//     });
-// });
-
-
-// Route::get('/user/{id}', fn($id) => "User ID: $id");
-
-// Route::get('/users/{name}', function ($name) {
-//     return view('welcome', ['name' => ucfirst($name)]);
-// });

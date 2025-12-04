@@ -2,6 +2,10 @@
 
 @section('title', 'Sales | Add')
 
+@section('styles')
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
+@endsection
+
 @section('content')
 <div class="container-fluid">
 
@@ -32,30 +36,37 @@
                 <div class="row g-3 mt-2">
 
                     <!-- Product Name -->
-                    <div class="col-md-3">
+                    {{--<div class="col-md-3 d-none">
                         <label class="form-label">Product Name</label>
                         <input type="text" class="form-control required" name="product_name" placeholder="Enter product name" required>
                         <div class="invalid-feedback">Please enter a product name.</div>
+                    </div>--}}
+
+                    <div class="col-md-3">
+                        <label class="form-label">Product Name</label>
+                        <select class="js-example-basic-single col-sm-12 required" name="product_id" required> </select>
+                        <input type="hidden" name="product_name" id="product_name">
+                        <div class="invalid-feedback">Please select a product name.</div>
                     </div>
 
                     <!-- Cost Price -->
                     <div class="col-md-3">
                         <label class="form-label">Cost Price (₹)</label>
-                        <input type="number" class="form-control numbers-only" name="cost_price" placeholder="Enter cost price" step="0.01" min="0" required>
+                        <input type="text" class="form-control numbers-only" name="cost_price" placeholder="Enter cost price" step="0.01" min="0" required>
                         <div class="invalid-feedback">Please enter a cost price.</div>
                     </div>
 
                     <!-- Sell Price -->
                     <div class="col-md-3">
                         <label class="form-label">Sell Price (₹)</label>
-                        <input type="number" class="form-control numbers-only" name="sell_price" placeholder="Enter sell price" step="0.01" min="0" required>
+                        <input type="text" class="form-control numbers-only" name="sell_price" placeholder="Enter sell price" step="0.01" min="0" required>
                         <div class="invalid-feedback">Please enter a sell price.</div>
                     </div>
 
                     <!-- Handling Charges -->
                     <div class="col-md-3">
                         <label class="form-label">Handling Charges (₹)</label>
-                        <input type="number" class="form-control numbers-only" name="handling_charges" placeholder="Enter packaging/transport charges" step="0.01" min="0" required>
+                        <input type="text" class="form-control numbers-only" name="handling_charges" placeholder="Enter packaging/transport charges" step="0.01" min="0" required>
                         <div class="invalid-feedback">Please enter handling charges.</div>
                     </div>
                 </div>
@@ -71,5 +82,42 @@
         </div>
     </div>
 </div>
+@endsection
 
+@section('scripts')
+<script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
+<script>
+    $(".js-example-basic-single").select2({
+        placeholder: "Select Product",
+        allowClear: true,
+        ajax: {
+            url: `{{url('/admin/fetch-products')}}`,
+            dataType: 'json',
+            method: 'POST',
+            data: function(params) {
+                return {
+                    product_name: params.term
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data.map(item => ({
+                        id: item.id,
+                        text: item.product_name,
+                        full: item
+                    }))
+                };
+            }
+        }
+    });
+
+    $(".js-example-basic-single").on('select2:select', function(e) {
+        const selected = e.params.data;
+        $('#product_name').val(selected.text); // Set product name
+    });
+
+    $(".js-example-basic-single").on('select2:clear', function() {
+        $('#product_name').val('');
+    });
+</script>
 @endsection
