@@ -110,10 +110,10 @@ class InvoiceController
 
         $settingArr = QueryBuilder::fetchAll($this->settingsTable);
         $settings = [];
-        foreach($settingArr as $setting){
+        foreach ($settingArr as $setting) {
             $settings[$setting->key] = $setting->value;
         }
-        
+
         return view('admin.invoices.view', compact('invoice', 'settings'));
     }
 
@@ -200,13 +200,19 @@ class InvoiceController
             ['invoices.id' => (int) $invoiceId['invoiceId']]
         );
 
+        $settingArr = QueryBuilder::fetchAll($this->settingsTable);
+        $settings = [];
+        foreach ($settingArr as $setting) {
+            $settings[$setting->key] = $setting->value;
+        }
+
         if (getEnv() !== 'prod') {
-            return $this->sendTestEmail($invoiceData);
+            return $this->sendTestEmail($invoiceData, $settings);
         }
 
         // Generate PDF
         $pdfService = new PdfService(app('view'));
-        $pdfBinary  = $pdfService->generateInvoicePdf($invoiceData);
+        $pdfBinary  = $pdfService->generateInvoicePdf($invoiceData, $settings);
 
         // Send Email
         $mailer = new MailService();
@@ -226,10 +232,10 @@ class InvoiceController
         }
     }
 
-    public function sendTestEmail($invoiceData)
+    public function sendTestEmail($invoiceData, $settings)
     {
         $pdfService = new PdfService(app('view'));
-        $pdfBinary  = $pdfService->generateInvoicePdf($invoiceData);
+        $pdfBinary  = $pdfService->generateInvoicePdf($invoiceData, $settings);
 
         // Send Email
         $mailer = new MailService();
