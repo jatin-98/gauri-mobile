@@ -14,6 +14,7 @@ class InvoiceController
 
     private string $tablename = 'invoices';
     private string $childTablename = 'invoice_items';
+    private string $settingsTable = 'settings';
 
     private const __TO_EMAIL = "enme1704@gmail.com";
     private const __EMAIL_SUBJECT = "Thank you for your Order!";
@@ -107,7 +108,13 @@ class InvoiceController
             ['invoices.id' => $invoiceId]
         );
 
-        return view('admin.invoices.view', compact('invoice'));
+        $settingArr = QueryBuilder::fetchAll($this->settingsTable);
+        $settings = [];
+        foreach($settingArr as $setting){
+            $settings[$setting->key] = $setting->value;
+        }
+        
+        return view('admin.invoices.view', compact('invoice', 'settings'));
     }
 
     public function insert(Request $request)

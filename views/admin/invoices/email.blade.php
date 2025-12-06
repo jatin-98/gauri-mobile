@@ -169,11 +169,11 @@
                 <tr>
                     <td width="60%" style="border:none; padding:0;">
                         <strong style="font-size: 11pt;">GAURI MOBILES</strong><br>
-                        GROUND FLOOR SCF NUMBER 45, SECTOR 15,<br>
-                        HUDA MARKET, FARIDABAD - 121007, HARYANA (INDIA)<br>
-                        Email: Gauri.mobiles@gmail.com<br>
-                        Mobile: 9599969400 | 9990969400<br>
-                        <strong>GSTIN:</strong> 06ABBPT5648K1Z8
+                        {{$settings['address_line1']}},<br>
+                        {{$settings['address_line2']}}<br>
+                        Email: {{$settings['store_email']}}<br>
+                        Mobile: {{$settings['phone_1']}} | {{$settings['phone_2']}}<br>
+                        <strong>GSTIN:</strong> {{$settings['gst_number']}}
                     </td>
                     <td width="40%" class="text-right" style="border:none; padding:0;">
                         <strong>Invoice No:</strong> {{ $invoice[0]->invoice_number }}<br>
@@ -197,7 +197,7 @@
                     </td>
                     <td width="40%" class="text-right" style="border:none; padding:0;">
                         <strong>Member No:</strong> 655310298393120<br>
-                        <strong>Salesman:</strong> MANISH - 9711115387<br>
+                        <strong>Salesman:</strong> AMARJEET - 9599969400<br>
                         <strong>Payment:</strong> {{ $invoice[0]->payment_method }} <span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->invoice_total, 2) }}
                     </td>
                 </tr>
@@ -280,9 +280,9 @@
         </div>
 
         <div class="mb-3">
-            <strong>Remarks:</strong> Corporate Offer - 1 year Extended Warranty<br>
-            <strong>Note:</strong> Unless otherwise stated, tax on this invoice is not payable under reverse charge.<br>
-            <strong>Warranty Period:</strong> Six Months
+            <strong>Remarks:</strong> <br>
+            <strong>Note:</strong> {{$settings['note']}}<br>
+            <strong>Warranty Period:</strong> {{$settings['warranty_months']}}
         </div>
 
         <div class="text-right mb-4">
@@ -292,11 +292,11 @@
 
         <div class="border-top pt-2" style="font-size:8pt;">
             <strong style="text-decoration:underline;">Terms & Conditions:</strong><br>
-            1. Goods once sold will not be taken back or exchanged.
-            2. Warranty as per manufacturer terms. Physical/water damage not covered.
-            3. Subject to Faridabad Jurisdiction only.
-            4. E. & O.E. (Errors and Omissions Excepted).
-            5. Please check your bill before leaving the counter.
+            1. {{$settings['tnc1']}}
+            2. {{$settings['tnc2']}}
+            3. {{$settings['tnc3']}}
+            4. {{$settings['tnc4']}}
+            5. {{$settings['tnc5']}}
         </div>
     </div>
     <div class="text-center mt-4" style="font-size:9pt;">

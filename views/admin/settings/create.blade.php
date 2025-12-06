@@ -9,5 +9,5 @@
             <input type="text" class="form-control required" name="value" placeholder="Enter Value">
         </div>
     </div>
-    <button class="btn btn-primary" type="submit"> Create Configuration</button>
+    <button class="btn btn-primary" type="submit" disabled> Create Configuration</button>
 </form>
