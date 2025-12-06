@@ -119,7 +119,7 @@
 
         /* === Spacing for Empty Rows === */
         .empty-row td {
-            height: 22px;
+            /* height: 220px; */
             /* Fixed height for empty rows */
             color: transparent;
         }
@@ -237,41 +237,46 @@
                 </tr>
                 @endforeach
 
-                {{-- Fill remaining space with empty rows --}}
-                @for($i = count($invoice); $i < 8; $i++)
-                    <tr class="empty-row">
-                    <td>&nbsp;</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    </tr>
-                    @endfor
+                @php
+                $baseHeight = 220;
+                $rowHeight = 22;
+                $rowNumber = $index ?? 0;
+                $calculatedPixels = max(0, $baseHeight - ($rowNumber * $rowHeight));
+                $styleAttribute = sprintf('style="height:%spx;"', $calculatedPixels);
+                @endphp
 
-                    {{-- Sub Total --}}
-                    <tr class="total-row">
-                        <th colspan="9" class="text-right">Sub Total</th>
-                        <th class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($subtotal, 0) }}</th>
-                    </tr>
+                <tr class="empty-row">
+                    <td {!! $styleAttribute !!}></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
 
-                    {{-- Discount --}}
-                    @if(($invoice[0]->discount ?? 0) > 0)
-                    <tr>
-                        <th colspan="9" class="text-right">Discount</th>
-                        <th class="text-right">- <span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->discount, 0) }}</th>
-                    </tr>
-                    @endif
+                {{-- Sub Total --}}
+                <tr class="total-row">
+                    <th colspan="9" class="text-right">Sub Total</th>
+                    <th class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($subtotal, 0) }}</th>
+                </tr>
 
-                    {{-- Grand Total --}}
-                    <tr style="background:#f0f8ff;">
-                        <th colspan="9" class="text-right">Grand Total</th>
-                        <th class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->invoice_total, 0) }}</th>
-                    </tr>
+                {{-- Discount --}}
+                @if(($invoice[0]->discount ?? 0) > 0)
+                <tr>
+                    <th colspan="9" class="text-right">Discount</th>
+                    <th class="text-right">- <span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->discount, 0) }}</th>
+                </tr>
+                @endif
+
+                {{-- Grand Total --}}
+                <tr style="background:#f0f8ff;">
+                    <th colspan="9" class="text-right">Grand Total</th>
+                    <th class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->invoice_total, 0) }}</th>
+                </tr>
             </tbody>
         </table>
 
