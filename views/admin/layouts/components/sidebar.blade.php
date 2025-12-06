@@ -36,6 +36,7 @@
                         </ul>
                     </li>
 
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{url('/admin/backups')}}"><i data-feather="upload-cloud"></i><span>Backups</span></a></li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{url('/admin/settings')}}"><i data-feather="settings"></i><span>Settings</span></a></li>
 
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{url('/logout')}}"><i data-feather="log-out"></i><span>Logout</span></a></li>

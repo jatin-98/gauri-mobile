@@ -44,9 +44,14 @@ class BackupController
                     'size' => formatSize($file->getSize()),
                     'created_date' => date("Y-m-d H:i:s", $file->getCTime()),
                     'raw_name' => $file->getFilename(),
+                    'timestamp' => $file->getCTime(),
                 ];
             }
         }
+
+        usort($backups, function ($a, $b) {
+            return $b['timestamp'] - $a['timestamp'];
+        });
 
         return view('admin.backups.index', compact('backups'));
     }
@@ -84,7 +89,7 @@ class BackupController
                 self::__EMAIL_SUBJECT,
                 self::__INNER_CONTENT,
                 file_get_contents($filePath),
-                pathinfo($filename, PATHINFO_FILENAME) 
+                pathinfo($filename, PATHINFO_FILENAME)
             );
 
             Session::flash('success', "Backup sent Successfully!");
