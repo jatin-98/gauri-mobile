@@ -207,15 +207,13 @@
         <table class="mb-4">
             <thead>
                 <tr>
-                    <th width="5%">S.No</th>
+                    <th width="8%">S.No</th>
                     <th width="25%">Product Name</th>
-                    <th width="10%">Description</th>
+                    <th width="25%">Description</th>
                     <th width="6%">Qty</th>
                     <th width="10%">Rate</th>
-                    <th width="11%">Base Val</th>
                     <th width="7%">CGST</th>
                     <th width="7%">SGST</th>
-                    <th width="7%">IGST</th>
                     <th width="12%">Total</th>
                 </tr>
             </thead>
@@ -225,14 +223,12 @@
                 @php $subtotal += $item->total; @endphp
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
-                    <td>{{ $item->product_name }}</td>
-                    <td class="text-center">{{ $item->product_description ?? '85171300' }}</td>
+                    <td class="fw-medium">{{ $item->product_name }}</td>
+                    <td class="text-left">{{ $item->product_description ?? '85171300' }}</td>
                     <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($item->price, 0) }}</td>
-                    <td class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($item->taxable_value ?? $item->price, 0) }}</td>
+                    <td class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format( ($item->taxable_value ?? $item->price) * 0.82 , 0) }}</td>
                     <td class="text-center">{{ $item->cgst_rate ?? '9' }}%</td>
                     <td class="text-center">{{ $item->sgst_rate ?? '9' }}%</td>
-                    <td class="text-center">{{ $item->igst_rate ?? '0' }}%</td>
                     <td class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($item->total, 0) }}</td>
                 </tr>
                 @endforeach
@@ -254,28 +250,26 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
                 </tr>
 
                 {{-- Sub Total --}}
                 <tr class="total-row">
-                    <th colspan="9" class="text-right">Sub Total</th>
-                    <th class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($subtotal, 0) }}</th>
+                    <th colspan="7" class="text-right">Sub Total</th>
+                    <th class="text-right" style="border-right: 1px solid #000 !important;"><span class="rupee-symbol">&#8377;</span>{{ number_format($subtotal, 0) }}</th>
                 </tr>
 
                 {{-- Discount --}}
                 @if(($invoice[0]->discount ?? 0) > 0)
                 <tr>
-                    <th colspan="9" class="text-right">Discount</th>
-                    <th class="text-right">- <span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->discount, 0) }}</th>
+                    <th colspan="7" class="text-right">Discount</th>
+                    <th class="text-right" style="border-right: 1px solid #000 !important;">- <span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->discount, 0) }}</th>
                 </tr>
                 @endif
 
                 {{-- Grand Total --}}
                 <tr style="background:#f0f8ff;">
-                    <th colspan="9" class="text-right">Grand Total</th>
-                    <th class="text-right"><span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->invoice_total, 0) }}</th>
+                    <th colspan="7" class="text-right">Grand Total</th>
+                    <th class="text-right" style="border-right: 1px solid #000 !important;"><span class="rupee-symbol">&#8377;</span>{{ number_format($invoice[0]->invoice_total, 0) }}</th>
                 </tr>
             </tbody>
         </table>

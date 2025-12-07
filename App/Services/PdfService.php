@@ -18,7 +18,7 @@ class PdfService
     public function generateInvoicePdf($invoice, $settings)
     {
         $html = $this->view->make('admin.invoices.email', compact('invoice', 'settings'))->render();
-        
+        // echo $html;exit;
         $options = new Options();
         $options->set('isRemoteEnabled', true);
 
