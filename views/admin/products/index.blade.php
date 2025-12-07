@@ -69,8 +69,8 @@
 
     var AdditionalData = {
         tableName: 'products', 
-        searchableColumns:['product_name', 'stock'],
-        orderbyColumns: ['product_name', 'stock'],
+        searchableColumns:['product_name', 'stock', 'product_description'],
+        orderbyColumns: ['product_name', 'stock', 'product_description'],
         editUrl: `{{url('/admin/products/edit')}}`
     }
 
