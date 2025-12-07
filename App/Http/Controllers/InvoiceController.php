@@ -206,7 +206,7 @@ class InvoiceController
             $settings[$setting->key] = $setting->value;
         }
 
-        if (getEnv() !== 'prod') {
+        if (getEnvDetails() !== 'prod') {
             return $this->sendTestEmail($invoiceData, $settings);
         }
 

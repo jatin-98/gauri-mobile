@@ -179,7 +179,7 @@
                         <strong>Invoice No:</strong> {{ $invoice[0]->invoice_number }}<br>
                         <strong>Invoice Date:</strong> {{ \Carbon\Carbon::parse($invoice[0]->created_at)->format('d-M-Y') }}<br>
                         <strong>Place of Supply:</strong> HARYANA<br>
-                        <strong>EPOS Ref No:</strong> EEC810493217274579
+                        <!-- <strong>EPOS Ref No:</strong> EEC810493217274579 -->
                     </td>
                 </tr>
             </table>

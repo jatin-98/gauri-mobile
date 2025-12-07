@@ -195,10 +195,10 @@ if (!function_exists('numberToWords')) {
     }
 }
 
-if (!function_exists('getEnv')) {
-    function getEnv()
+if (!function_exists('getEnvDetails')) {
+    function getEnvDetails()
     {
-        return "dev";
+        return "prod";
     }
 }
 

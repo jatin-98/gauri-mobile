@@ -12,7 +12,7 @@ class BackupController
 {
 
     private const __BACKUP_PATH__ = __DIR__ . '/../../../storage/backups/';
-    private const __TO_EMAIL = "enme1704@gmail.com";
+    private const __TO_EMAIL = "amarjeet.95.99.9@gmail.com";
     private const __EMAIL_SUBJECT = "Backup for Gauri Mobile";
     private const __INNER_CONTENT = "Please find your backup attached.";
 

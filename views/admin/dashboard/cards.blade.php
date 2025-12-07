@@ -40,7 +40,7 @@
             <div class="media static-top-widget">
                 <div class="align-self-center text-center"><i data-feather="award"></i></div>
                 <div class="media-body"><span class="m-0">Best Selling Item</span>
-                    <h4 class="mb-0 counter">{{$bestSellingProductsByQuantity[0]->product_name}}</h4><i class="icon-bg" data-feather="award"></i>
+                    <h4 class="mb-0 counter">{{$bestSellingProductsByQuantity[0]->product_name ?? "N/A"}}</h4><i class="icon-bg" data-feather="award"></i>
                 </div>
             </div>
         </div>
