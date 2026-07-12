@@ -31,21 +31,24 @@ class BackupController
 
     public function index()
     {
-        $directory = new FilesystemIterator(self::__BACKUP_PATH__);
         $backups = [];
+        
+        if (is_dir(self::__BACKUP_PATH__)) {
+            $directory = new FilesystemIterator(self::__BACKUP_PATH__);
+            
+            foreach ($directory as $file) {
+                if ($file->isFile()) {
+                    $cleanName = preg_replace('/[[:cntrl:]]/', '', base64_decode($file->getFilename()));
+                    $cleanName = rtrim($cleanName, "* \t\n\r\0\x0B");
 
-        foreach ($directory as $file) {
-            if ($file->isFile()) {
-                $cleanName = preg_replace('/[[:cntrl:]]/', '', base64_decode($file->getFilename()));
-                $cleanName = rtrim($cleanName, "* \t\n\r\0\x0B");
-
-                $backups[] = [
-                    'name' => $cleanName,
-                    'size' => formatSize($file->getSize()),
-                    'created_date' => date("Y-m-d H:i:s", $file->getCTime()),
-                    'raw_name' => $file->getFilename(),
-                    'timestamp' => $file->getCTime(),
-                ];
+                    $backups[] = [
+                        'name' => $cleanName,
+                        'size' => formatSize($file->getSize()),
+                        'created_date' => date("Y-m-d H:i:s", $file->getCTime()),
+                        'raw_name' => $file->getFilename(),
+                        'timestamp' => $file->getCTime(),
+                    ];
+                }
             }
         }
 

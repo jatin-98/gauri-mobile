@@ -134,22 +134,18 @@ MAIL_PASSWORD=your-app-password
 MAIL_FROM=your-email@gmail.com
 ```
 
-### 4. Create the Database & Run Migrations
+### 4. Start the Database (Docker)
+
+Instead of installing MySQL locally, simply use Docker to instantly spin up the database. This will also automatically create the `gauri_mobiles` database, run all the table migrations, and seed a default Admin user!
 
 ```bash
-# Create the database
-mysql -u root -p -e "CREATE DATABASE gauri_mobiles CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# Run each migration
-mysql -u root -p gauri_mobiles < migrations/users.sql
-mysql -u root -p gauri_mobiles < migrations/roles.sql
-mysql -u root -p gauri_mobiles < migrations/user_roles.sql
-mysql -u root -p gauri_mobiles < migrations/products.sql
-mysql -u root -p gauri_mobiles < migrations/sales.sql
-mysql -u root -p gauri_mobiles < migrations/invoices.sql
-mysql -u root -p gauri_mobiles < migrations/invoice_items.sql
-mysql -u root -p gauri_mobiles < migrations/settings.sql
+# Start the MySQL container in the background
+docker-compose up -d
 ```
+
+> **Default Admin Account:**
+> - Email: `admin@gmail.com`
+> - Password: `password`
 
 ### 5. Set Storage Permissions
 
