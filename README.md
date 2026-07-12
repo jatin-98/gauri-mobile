@@ -15,79 +15,61 @@ A lightweight, custom-built **PHP 8 admin panel** for managing a mobile shop's p
 - 📊 **Datatable API** — Server-side datatable endpoint for dynamic data grids
 - 📄 **PDF Generation** — Invoice PDFs generated via DomPDF
 - 📧 **Email Service** — Send invoices and backups via Gmail SMTP (PHPMailer)
+- 🌍 **Environment Management** — Native `.env` file parsing for secure configurations (zero dependencies)
 
 ---
 
 ## 🏗️ Architecture
 
-This is a **core PHP project** that manually bootstraps selected Laravel/Illuminate packages — no Artisan, no `public/index.php` kernel, no service providers auto-discovery.
+This is a **core PHP project** that manually bootstraps selected Laravel/Illuminate packages using a modern MVC lifecycle pattern. 
 
 ```
-bootstrap/app.php          ← Application entry point (wires everything together)
-├── Container + Events     ← Illuminate IoC container & event dispatcher
-├── Router                 ← Illuminate routing with middleware support
-├── Eloquent (Capsule)     ← Database ORM via DB Capsule Manager
-├── Blade Engine           ← Blade templating with compiled view cache
-└── Request → Dispatch → Response
+public/index.php           ← Web root entry point (Receives Request, Sends Response)
+├── bootstrap/app.php      ← Bootstraps the application and returns $app container
+│   ├── App\Core\Environment      ← Parses .env variables
+│   ├── App\Core\Application      ← IoC Container, Facades, Event Dispatcher, Router
+│   ├── App\Database\DatabaseManager ← Bootstraps Eloquent Capsule
+│   └── App\Core\ViewManager      ← Configures Blade compiler and view factory
+└── routes/web.php         ← Maps URLs to Controllers
 ```
 
 ### Directory Structure
 
 ```
 gauri-mobile/
+├── app/
+│   ├── Helpers/
+│   │   └── functions.php       # Global helper functions (env, view, asset, etc.)
+│   └── Exceptions/             # Application exceptions
 ├── App/
-│   ├── Core/
-│   │   ├── Request.php         # Custom request helpers
-│   │   └── Session.php         # Session management
+│   ├── Core/                   # Core application managers (Container, View, Env)
+│   ├── Database/               # Database management and QueryBuilder
 │   ├── Http/
 │   │   ├── Controllers/        # All route controllers
-│   │   │   ├── AuthController.php
-│   │   │   ├── BackupController.php
-│   │   │   ├── DatatableController.php
-│   │   │   ├── HomeController.php
-│   │   │   ├── InvoiceController.php
-│   │   │   ├── ProductController.php
-│   │   │   ├── SalesController.php
-│   │   │   └── SettingController.php
-│   │   ├── Middleware/
-│   │   │   └── AuthMiddleware.php
+│   │   ├── Middleware/         # Route middleware 
 │   │   └── Kernel.php          # Middleware registration
-│   ├── Model/
-│   │   └── QueryBuilder.php    # Custom Eloquent query helpers
-│   └── Services/
-│       ├── DatabaseBackup.php  # SQL dump & backup management
-│       ├── MailService.php     # PHPMailer SMTP wrapper
-│       └── PdfService.php      # DomPDF wrapper
+│   └── Services/               # Domain logic (Email, Backups, PDF)
 ├── bootstrap/
-│   └── app.php                 # Application bootstrap & entry point
+│   └── app.php                 # Application bootstrap (returns $app)
 ├── config/
 │   ├── app.php                 # App-level config
-│   └── database.php            # MySQL connection config
-├── helpers/
-│   └── methods.php             # Global helper functions (autoloaded)
+│   └── database.php            # MySQL connection config (reads from .env)
 ├── migrations/                 # SQL schema files
-│   ├── users.sql
-│   ├── roles.sql
-│   ├── user_roles.sql
-│   ├── products.sql
-│   ├── sales.sql
-│   ├── invoices.sql
-│   ├── invoice_items.sql
-│   └── settings.sql
 ├── public/
-│   ├── index.php               # Web root entry point
+│   ├── index.php               # Web root entry point (Request/Response lifecycle)
 │   ├── assets/                 # CSS, JS, images
 │   └── uploads/                # User-uploaded files
+├── resources/
+│   └── views/                  # Blade templates
 ├── routes/
 │   └── web.php                 # All application routes
 ├── storage/
-│   ├── cache/                  # Blade compiled views
 │   ├── backups/                # SQL backup files
+│   ├── framework/              # Blade compiled views and sessions
 │   └── logs/                   # Application logs
-├── views/                      # Blade templates
 ├── vendor/                     # Composer dependencies (git-ignored)
-├── composer.json
-└── .htaccess                   # URL rewriting rules
+├── .env.example                # Environment variables template
+└── composer.json
 ```
 
 ---
@@ -133,21 +115,23 @@ cd gauri-mobile
 composer install
 ```
 
-### 3. Configure the Database
+### 3. Configure the Environment
 
-Edit `config/database.php` with your MySQL credentials:
+Copy the `.env.example` file to `.env` and configure your settings:
 
-```php
-return [
-    'driver'   => 'mysql',
-    'host'     => 'localhost',
-    'database' => 'gauri_mobiles',
-    'username' => 'your_db_user',
-    'password' => 'your_db_password',
-    'charset'  => 'utf8mb4',
-    'collation'=> 'utf8mb4_unicode_ci',
-    'prefix'   => '',
-];
+```bash
+cp .env.example .env
+```
+
+Update your `.env` with MySQL credentials, SMTP settings, and mysqldump paths:
+```env
+DB_DATABASE=gauri_mobiles
+DB_USERNAME=your_db_user
+DB_PASSWORD=your_db_password
+
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_FROM=your-email@gmail.com
 ```
 
 ### 4. Create the Database & Run Migrations
@@ -177,27 +161,17 @@ chmod -R 775 storage/
 
 Point your virtual host document root to the `public/` directory.
 
-**Apache** — ensure `mod_rewrite` is enabled and the `.htaccess` in the project root handles rewrites to `bootstrap/app.php`, while `public/.htaccess` handles static assets.
-
 **PHP built-in server (dev only):**
-
 ```bash
 php -S localhost:8000 -t public
 ```
-
 Then open [http://localhost:8000](http://localhost:8000).
 
 ---
 
 ## 📬 Email Configuration
 
-Mail is sent via Gmail SMTP using PHPMailer. Update credentials in `App/Services/MailService.php`:
-
-```php
-$this->mail->Username = 'your-email@gmail.com';
-$this->mail->Password = 'your-app-password'; // Gmail App Password, not your login password
-$this->mail->setFrom('your-email@gmail.com', 'Gauri Mobiles');
-```
+Mail is sent via Gmail SMTP using PHPMailer. Ensure you have populated the `MAIL_*` keys in your `.env` file. 
 
 > **Note:** Use a [Gmail App Password](https://support.google.com/accounts/answer/185833), not your regular Gmail password.
 
@@ -207,7 +181,7 @@ $this->mail->setFrom('your-email@gmail.com', 'Gauri Mobiles');
 
 - Passwords are hashed (do **not** store plain text passwords).
 - The `auth` middleware protects all `/admin/*` routes.
-- Keep `config/database.php` and `MailService.php` credentials out of version control — use a `.env` file or environment variables in production.
+- The `.env` file keeps sensitive credentials out of version control. The `.gitignore` file ensures `.env` is never committed.
 
 ---
 
