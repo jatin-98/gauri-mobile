@@ -18,6 +18,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
+// Load custom helpers FIRST so they override Illuminate's default helpers (like env)
+require __DIR__ . '/../app/Helpers/functions.php';
+
 require __DIR__ . '/../vendor/autoload.php';
 
 // ------------------------------------------------------

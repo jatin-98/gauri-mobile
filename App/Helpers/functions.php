@@ -21,7 +21,7 @@ if (!function_exists('asset')) {
         $basePath = rtrim($basePath, '/');
 
         // Build and return full asset URL
-        return sprintf('%s://%s%s/%s', $scheme, $host, "$basePath/public", ltrim($path, '/'));
+        return sprintf('%s://%s%s/%s', $scheme, $host, $basePath, ltrim($path, '/'));
     }
 }
 
