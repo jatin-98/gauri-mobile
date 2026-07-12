@@ -9,7 +9,6 @@ class DatabaseBackup
 {
 
     private const __FILE_PATH__ = __DIR__ . './../../storage/backups/';
-    private const __DUMP_PATH__ = 'C:\xampp\mysql\bin\mysqldump.exe';
 
     public static function backup(): array
     {
@@ -21,8 +20,8 @@ class DatabaseBackup
             $pass = $config['password'];
             $dbName = $config['database'];
 
-            // Full path for Windows
-            $mysqldumpPath = self::__DUMP_PATH__;
+            // Path to mysqldump — set MYSQLDUMP_PATH in .env for custom installs (e.g. XAMPP on Windows)
+            $mysqldumpPath = env('MYSQLDUMP_PATH', 'mysqldump');
 
             $backUpFileName = base64_encode(date('Y-m-d_H:i:s'));
             $backupFile = self::__FILE_PATH__ . $backUpFileName . ".sql";

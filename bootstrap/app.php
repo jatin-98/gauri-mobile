@@ -104,7 +104,7 @@ class_alias(\Illuminate\Support\Facades\DB::class, 'DB');
 // 3️⃣ Blade (View) Setup
 // ------------------------------------------------------
 $filesystem = new Filesystem;
-$viewPaths = [__DIR__ . '/../views'];
+$viewPaths = [__DIR__ . '/../resources/views'];
 $cachePath = __DIR__ . '/../storage/cache/views';
 
 // Ensure the cache directory exists

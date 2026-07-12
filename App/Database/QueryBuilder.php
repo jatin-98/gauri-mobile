@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Model;
+namespace App\Database;
 
 use DB;
 
+/**
+ * QueryBuilder
+ *
+ * A static DAO wrapper around Illuminate's Query Builder.
+ * Provides reusable, table-agnostic database operations.
+ */
 class QueryBuilder
 {
-
     public static function fetchOneRecord(string $tablename, array $whereCondition)
     {
         return DB::table($tablename)->where($whereCondition)->first();
@@ -52,8 +57,7 @@ class QueryBuilder
             });
         }
 
-        $records = $query->offset($offset)->limit($limit)->get();
-        return $records;
+        return $query->offset($offset)->limit($limit)->get();
     }
 
     public static function deleteRecord(string $tableName, int $id)

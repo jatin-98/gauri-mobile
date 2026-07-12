@@ -24,5 +24,5 @@ return array(
     'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
     '37a3dc5111fe8f707ab4c132ef1dbc62' => $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',
     'ef65a1626449d89d0811cf9befce46f0' => $vendorDir . '/illuminate/events/functions.php',
-    'd60b65d433eb101a755ab7b0e962cce3' => $baseDir . '/helpers/methods.php',
+    'd2a92616cff36507f5c023d6ef48710b' => $baseDir . '/app/Helpers/functions.php',
 );

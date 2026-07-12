@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Request;
 use App\Core\Session;
-use App\Model\QueryBuilder;
+use App\Database\QueryBuilder;
 use DB;
 use Exception;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\QueryBuilder;
+use App\Database\QueryBuilder;
 use App\Core\Request;
 use App\Core\Session;
 use Exception;

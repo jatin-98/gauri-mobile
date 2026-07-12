@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\controllers;
+namespace App\Http\Controllers;
 
 use App\Core\Request;
 use App\Core\Session;
-use App\Model\QueryBuilder;
+use App\Database\QueryBuilder;
 use Exception;
 use App\Services\PdfService;
 use App\Services\MailService;
