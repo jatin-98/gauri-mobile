@@ -29,7 +29,7 @@ if (!function_exists('asset')) {
 if (!function_exists('app')) {
     function app($abstract = null)
     {
-        global $container;
+        $container = \Illuminate\Container\Container::getInstance();
         return $abstract ? $container->make($abstract) : $container;
     }
 }
