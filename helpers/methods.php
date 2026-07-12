@@ -195,10 +195,30 @@ if (!function_exists('numberToWords')) {
     }
 }
 
-if (!function_exists('getEnvDetails')) {
-    function getEnvDetails()
+if (!function_exists('env')) {
+    /**
+     * Gets an environment variable by key.
+     * Reads from $_ENV, $_SERVER, or getenv() — no package required.
+     *
+     * @param  string  $key
+     * @param  mixed   $default
+     * @return mixed
+     */
+    function env(string $key, mixed $default = null): mixed
     {
-        return "prod";
+        $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+
+        if ($value === false || $value === null) {
+            return $default;
+        }
+
+        // Cast common string booleans
+        return match (strtolower((string) $value)) {
+            'true'  => true,
+            'false' => false,
+            'null'  => null,
+            default => $value,
+        };
     }
 }
 

@@ -12,7 +12,7 @@ class BackupController
 {
 
     private const __BACKUP_PATH__ = __DIR__ . '/../../../storage/backups/';
-    private const __TO_EMAIL = "amarjeet.95.99.9@gmail.com";
+    private static function toEmail(): string { return env('BACKUP_TO_EMAIL'); }
     private const __EMAIL_SUBJECT = "Backup for Gauri Mobile";
     private const __INNER_CONTENT = "Please find your backup attached.";
 
@@ -85,7 +85,7 @@ class BackupController
 
         try {
             $mailer->sendBackup(
-                self::__TO_EMAIL,
+                self::toEmail(),
                 self::__EMAIL_SUBJECT,
                 self::__INNER_CONTENT,
                 file_get_contents($filePath),

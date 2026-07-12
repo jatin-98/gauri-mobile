@@ -16,11 +16,11 @@ class MailService
         $this->mail->isSMTP();
         $this->mail->Host       = 'smtp.gmail.com';
         $this->mail->SMTPAuth   = true;
-        $this->mail->Username   = 'gaurimobiles.9@gmail.com';
-        $this->mail->Password   = 'qdyu qysp ltfk mkxv';   // NOT Gmail password
+        $this->mail->Username   = env('MAIL_USERNAME');
+        $this->mail->Password   = env('MAIL_PASSWORD');
         $this->mail->SMTPSecure = 'tls';
         $this->mail->Port       = 587;
-        $this->mail->setFrom('gaurimobiles.9@gmail.com', 'Gauri Mobiles');
+        $this->mail->setFrom(env('MAIL_FROM'), 'Gauri Mobiles');
     }
 
     public function sendInvoice($toEmail, $subject, $body, $pdfBinary, $invoiceNumber)

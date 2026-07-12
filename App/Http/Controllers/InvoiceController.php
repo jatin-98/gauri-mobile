@@ -16,7 +16,7 @@ class InvoiceController
     private string $childTablename = 'invoice_items';
     private string $settingsTable = 'settings';
 
-    private const __TO_EMAIL = "enme1704@gmail.com";
+    private static function toEmail(): string { return env('INVOICE_TO_EMAIL'); }
     private const __EMAIL_SUBJECT = "Thank you for your Order!";
     private static string $__EMAIL_OPENING = "Dear %s,\nThank you for shopping at Gauri Mobiles. Please find your invoice attached.";
 
@@ -242,7 +242,7 @@ class InvoiceController
 
         try {
             $mailer->sendInvoice(
-                self::__TO_EMAIL,
+                self::toEmail(),
                 self::__EMAIL_SUBJECT,
                 sprintf(self::$__EMAIL_OPENING, $invoiceData[0]->customer_name),
                 $pdfBinary,

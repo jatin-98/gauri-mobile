@@ -1,2 +1,37 @@
+# Storage
 /storage/cache/
 /storage/backups/
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+
+# Dependencies
+/vendor/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE / Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Sensitive keys / certs
+*.pem
+*.key
+
+# Compiled / generated
+*.cache
+
+# OS files
+.DS_Store
