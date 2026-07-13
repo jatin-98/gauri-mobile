@@ -169,11 +169,11 @@
                 <tr>
                     <td width="60%" style="border:none; padding:0;">
                         <strong style="font-size: 11pt;">GAURI MOBILES</strong><br>
-                        {{$settings['address_line1']}},<br>
-                        {{$settings['address_line2']}}<br>
-                        Email: {{$settings['store_email']}}<br>
-                        Mobile: {{$settings['phone_1']}} | {{$settings['phone_2']}}<br>
-                        <strong>GSTIN:</strong> {{$settings['gst_number']}}
+                        {{$settings['address_line1'] ?? "Shop No. 123, Arya Samaj"}},<br>
+                        {{$settings['address_line2'] ?? "Near Railway Station, Fatehabad"}}<br>
+                        Email: {{$settings['store_email'] ?? "sampleemail@gmail.com"}}<br>
+                        Mobile: {{$settings['phone_1'] ?? "9876543210"}} | {{$settings['phone_2'] ?? "9876543210"}}<br>
+                        <strong>GSTIN:</strong> {{$settings['gst_number'] ?? "12ABCDE1234F5G6"}}
                     </td>
                     <td width="40%" class="text-right" style="border:none; padding:0;">
                         <strong>Invoice No:</strong> {{ $invoice[0]->invoice_number }}<br>
@@ -280,8 +280,8 @@
 
         <div class="mb-3">
             <strong>Remarks:</strong> <br>
-            <strong>Note:</strong> {{$settings['note']}}<br>
-            <strong>Warranty Period:</strong> {{$settings['warranty_months']}}
+            <strong>Note:</strong> {{$settings['note'] ?? "Sample Note to the Customer"}}<br>
+            <strong>Warranty Period:</strong> {{$settings['warranty_months'] ?? "One Year from the Date of Purchase"}}
         </div>
 
         <div class="text-right mb-4">
@@ -291,11 +291,11 @@
 
         <div class="border-top pt-2" style="font-size:8pt;">
             <strong style="text-decoration:underline;">Terms & Conditions:</strong><br>
-            1. {{$settings['tnc1']}}
-            2. {{$settings['tnc2']}}
-            3. {{$settings['tnc3']}}
-            4. {{$settings['tnc4']}}
-            5. {{$settings['tnc5']}}
+            1. {{$settings['tnc1'] ?? "Goods once sold will not be taken back or exchanged."}}<br>
+            2. {{$settings['tnc2'] ?? "All disputes are subject to local jurisdiction only."}}<br>
+            3. {{$settings['tnc3'] ?? "Warranty is applicable strictly as per the manufacturer's policy."}}<br>
+            4. {{$settings['tnc4'] ?? "Physical damage, liquid damage, or unauthorized repair voids the warranty."}}<br>
+            5. {{$settings['tnc5'] ?? "E. & O.E. (Errors and Omissions Excepted)."}}<br>
         </div>
     </div>
     <div class="text-center mt-4" style="font-size:9pt;">

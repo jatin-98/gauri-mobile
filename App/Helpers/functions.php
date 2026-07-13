@@ -175,13 +175,13 @@ if (!function_exists('numberToWords')) {
 
         $result = '';
         // Crores
-        $result .= $numToWords((int)floor($num / 10000000), ' Crore ');
+        $result .= $numToWords((int)(floor($num / 10000000)), ' Crore ');
         // Lakhs
-        $result .= $numToWords((int)floor(($num / 100000) % 100), ' Lakh ');
+        $result .= $numToWords(((int)floor($num / 100000)) % 100, ' Lakh ');
         // Thousands
-        $result .= $numToWords((int)floor(($num / 1000) % 100), ' Thousand ');
+        $result .= $numToWords(((int)floor($num / 1000)) % 100, ' Thousand ');
         // Hundreds
-        $result .= $numToWords((int)floor(($num / 100) % 10), ' Hundred ');
+        $result .= $numToWords(((int)floor($num / 100)) % 10, ' Hundred ');
         // Last two digits
         $result .= $numToWords((int)($num % 100), '');
 
