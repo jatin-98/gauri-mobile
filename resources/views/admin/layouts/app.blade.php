@@ -137,6 +137,18 @@
     <!-- Plugin used-->
 
     @yield('scripts')
+    <script>
+        // Disable BFCache in Safari/Firefox
+        window.onunload = function () {};
+
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) {
+                // Instantly hide the page to prevent a flash of protected content
+                document.body.style.display = 'none';
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>
