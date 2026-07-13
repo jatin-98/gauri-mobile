@@ -1,4 +1,5 @@
 <form class="needs-validation" method="POST" action="{{ url('/admin/settings/insert') }}" novalidate>
+    {!! csrf_field() !!}
     <div class="row g-3 mb-3 mt-3">
         <div class="col-md-6">
             <label class="form-label fw-semibold">Enter Key</label>

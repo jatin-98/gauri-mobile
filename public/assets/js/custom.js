@@ -18,6 +18,13 @@ const showToast = (type, message) => {
 };
 
 
+// Set up CSRF token for all jQuery AJAX requests globally
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 function customDataTable(url, columnData, extraData = {}) {
     return $('#ajax-data-object').DataTable({
         processing: true,

@@ -33,6 +33,7 @@
         <div class="card-body">
 
             <form class="needs-validation" method="POST" action="{{ url('/admin/sales/update') }}" novalidate>
+    {!! csrf_field() !!}
 
                 <input type="hidden" name="id" value="{{ $sale->id }}">
                 <input type="hidden" name="product_name" id="product_name" value="{{ $sale->product_name }}">

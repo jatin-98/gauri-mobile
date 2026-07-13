@@ -25,6 +25,28 @@ class Session
         if (!isset($_SESSION[self::$sessionKey]['_flash'])) {
             $_SESSION[self::$sessionKey]['_flash'] = [];
         }
+
+        if (!isset($_SESSION[self::$sessionKey]['_token'])) {
+            $_SESSION[self::$sessionKey]['_token'] = bin2hex(random_bytes(32));
+        }
+    }
+
+    /**
+     * Get the CSRF token, generating one if it doesn't exist
+     */
+    public static function token(): string
+    {
+        self::init();
+        return $_SESSION[self::$sessionKey]['_token'];
+    }
+
+    /**
+     * Regenerate the CSRF token
+     */
+    public static function regenerateToken(): void
+    {
+        self::init();
+        $_SESSION[self::$sessionKey]['_token'] = bin2hex(random_bytes(32));
     }
 
     /**

@@ -233,3 +233,17 @@ if (!function_exists('formatSize')) {
         return number_format($bytes / pow(1024, $power), 2) . ' ' . $units[$power];
     }
 }
+
+if (!function_exists('csrf_token')) {
+    function csrf_token()
+    {
+        return \App\Core\Session::token();
+    }
+}
+
+if (!function_exists('csrf_field')) {
+    function csrf_field()
+    {
+        return '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+    }
+}

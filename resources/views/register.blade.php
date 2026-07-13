@@ -16,6 +16,7 @@
                     </div>
                     <div class="login-main">
                         <form class="theme-form" method="POST" action="{{url('/register')}}">
+    {!! csrf_field() !!}
                             <h4>Create your account</h4>
                             <p>Enter your personal details to create account</p>
                             <div class="form-group">

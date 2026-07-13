@@ -30,6 +30,7 @@
             <!-- Single Product -->
             <div class="tab-pane fade show active" id="single" role="tabpanel" aria-labelledby="single-tab">
                 <form class="needs-validation" method="POST" action="{{ url('/admin/products/edit') }}" novalidate>
+    {!! csrf_field() !!}
                     <div class="row g-3 mb-3 mt-3">
                         <input type="hidden" name="id" value="{{$product->id}}">
                         <div class="col-md-6">

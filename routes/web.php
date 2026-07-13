@@ -16,9 +16,9 @@ use App\Http\Controllers\SettingController;
 // Public Routes
 // ==============================
 Route::get('/login', [AuthController::class, 'loginView']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('csrf');
 Route::get('/register', [AuthController::class, 'registerView']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->middleware('csrf');
 Route::get('/logout', function () {
     Session::destroy();
     redirect('/login');
@@ -29,7 +29,7 @@ Route::get('/', fn() => redirect('/admin'));
 // ==============================
 // Admin Routes (Grouped with prefix + middleware)
 // ==============================
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'csrf'])->group(function () {
 
     Route::get('/', [HomeController::class, 'admin']);
 

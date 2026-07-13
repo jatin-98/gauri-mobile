@@ -1,4 +1,5 @@
 <form class="needs-validation" method="POST" action="{{ url('/admin/settings/update') }}" novalidate>
+    {!! csrf_field() !!}
     <div class="row g-3 mb-3 mt-3">
         <div class="col-md-3">
             <label class="form-label fw-semibold">SMTP Host</label>

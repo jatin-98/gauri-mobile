@@ -22,6 +22,7 @@
     <div class="card">
         <div class="card-body">
             <form class="needs-validation" method="POST" action="{{url('/admin/invoices/add')}}" novalidate>
+    {!! csrf_field() !!}
                 <h5 class="mb-3 text-secondary fw-bold">Customer Information</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">

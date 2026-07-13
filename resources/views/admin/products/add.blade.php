@@ -49,6 +49,7 @@
                 <!-- Single Product -->
                 <div class="tab-pane fade show active" id="single" role="tabpanel" aria-labelledby="single-tab">
                     <form class="needs-validation" method="POST" action="{{ url('/admin/products/add') }}" novalidate>
+    {!! csrf_field() !!}
                         <div class="row g-3 mb-3 mt-3">
                             <div class="col-md-6">
                                 <label class="form-label">Product Name</label>
@@ -72,6 +73,7 @@
                 <!-- Multiple Products -->
                 <div class="tab-pane fade" id="multiple" role="tabpanel" aria-labelledby="multiple-tab">
                     <form class="needs-validation" method="POST" action="{{ url('/admin/products/add') }}" id="multi-product-form" novalidate>
+    {!! csrf_field() !!}
                         <div id="product-wrapper">
                             <div class="product-row row g-3 mb-3 align-items-end mt-3">
                                 <div class="col-md-6">

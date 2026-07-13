@@ -1,4 +1,5 @@
 <form class="needs-validation" method="POST" action="{{ url('/admin/settings/update') }}" novalidate>
+    {!! csrf_field() !!}
     <div class="row g-3 mt-3">
 
         <!-- Store Details -->

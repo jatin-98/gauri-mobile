@@ -33,6 +33,7 @@
         <div class="card-body">
 
             <form class="needs-validation" method="POST" action="{{ url('/admin/sales/add') }}" novalidate>
+    {!! csrf_field() !!}
                 <div class="row g-3 mt-2">
 
                     <!-- Product Name -->
