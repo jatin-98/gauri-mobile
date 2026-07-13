@@ -27,8 +27,17 @@ try {
 } catch (Throwable $e) {
     // Return a proper 500 response
     if (env('APP_DEBUG', true)) {
-        // Detailed error in debug mode
-        $response = new Response('500 | Internal Server Error: ' . $e->getMessage() . "\n" . $e->getTraceAsString(), 500);
+        if (class_exists(\Whoops\Run::class)) {
+            $whoops = new \Whoops\Run;
+            $handler = new \Whoops\Handler\PrettyPageHandler;
+            $whoops->pushHandler($handler);
+            $whoops->allowQuit(false);
+            $whoops->writeToOutput(false);
+            $response = new Response($whoops->handleException($e), 500);
+        } else {
+            // Detailed error in debug mode fallback
+            $response = new Response('500 | Internal Server Error: ' . $e->getMessage() . "\n" . $e->getTraceAsString(), 500);
+        }
     } else {
         $response = new Response('500 | Internal Server Error', 500);
     }
